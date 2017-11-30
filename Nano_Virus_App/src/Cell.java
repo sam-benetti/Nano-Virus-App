@@ -6,12 +6,12 @@ public class Cell {
     private CellType cellType = CellType.returnRandomType();
 
 
-    public int getCoordinates(int i){
-        return coordinates[i];
+    public int getCoordinates(int index){
+        return coordinates[index];
     }
 
-    public void setCoordinates(int coordinate, int i){
-        this.coordinates[i] = coordinate;
+    public void setCoordinates(int coordinate, int index){
+        this.coordinates[index] = coordinate;
     }
 
     public CellType getCellType() {

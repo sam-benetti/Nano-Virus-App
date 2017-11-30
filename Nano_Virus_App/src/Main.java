@@ -6,10 +6,27 @@ public class Main {
     public static final int NUM_INITIAL_CELLS = 100;
     public static ArrayList<Cell> cells;
     public static Virus virus;
+    public static int cycle = 0;
 
     public static void main(String [] args){
+
+        boolean keepGoing = true;
+        int tumorousCells = 0;
         createCells();
         createVirus();
+        tumorousCells = returnNumTumorousCells(cells);
+
+       while(keepGoing){
+            virus.moveVirusToAnotherCell(cells);
+            System.out.println(cells.get(virus.getCurrentCellPosition()).getCellType());
+            virus.destroyIfTumorousCell(virus.getCurrentCellPosition(), cells);
+            cycle++;
+
+            //End simulation condition: All cells are tumorous or all tumorous cells have been destroyed
+            if( tumorousCells == 0 || tumorousCells == 100){
+                keepGoing = false;
+            }
+        }
     }
 
     public static void createCells(){
@@ -22,15 +39,27 @@ public class Main {
 
     public static void createVirus(){
         virus = Virus.getInstance();
-        int randomIndex = ThreadLocalRandom.current().nextInt(1, 101);
+        int randomIndex = ThreadLocalRandom.current().nextInt(1, NUM_INITIAL_CELLS + 1);
         int x = cells.get(randomIndex).getCoordinates(0);
         int y = cells.get(randomIndex).getCoordinates(1);
         int z = cells.get(randomIndex).getCoordinates(2);
-
+        virus.setCurrentCellPosition(randomIndex);
         virus.setCurrentCoordinates(x,0);
         virus.setCurrentCoordinates(y,1);
         virus.setCurrentCoordinates(z,2);
 
         System.out.println("Virus is starting at Cell: " + randomIndex);
+        System.out.println("Virus is starting at Cell: " + virus.getCurrentCellPosition());
+
+    }
+
+    public static int returnNumTumorousCells(ArrayList<Cell> cells){
+        int numTumorous = 0;
+        for(int i = 0; i < cells.size(); i++){
+            if(cells.get(i).getCellType() == CellType.TUMOROUS){
+                numTumorous++;
+            }
+        }
+        return numTumorous;
     }
 }
