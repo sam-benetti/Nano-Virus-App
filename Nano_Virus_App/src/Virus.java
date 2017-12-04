@@ -38,7 +38,8 @@ public class Virus {
         int randomIndex = 0;
 
         while (distance == 0 || distance >= 5000) {
-            randomIndex = ThreadLocalRandom.current().nextInt(1, cells.size());
+
+            randomIndex = ThreadLocalRandom.current().nextInt(0, cells.size());
             x = cells.get(randomIndex).getCoordinates(0);
             y = cells.get(randomIndex).getCoordinates(1);
             z = cells.get(randomIndex).getCoordinates(2);
@@ -46,6 +47,7 @@ public class Virus {
                     (Math.pow(y - currentCoordinates[1], 2)) +
                     (Math.pow(z - currentCoordinates[2], 2)));
         }
+
         setCurrentCellPosition(randomIndex);
         setCurrentCoordinates(x, 0);
         setCurrentCoordinates(y, 1);

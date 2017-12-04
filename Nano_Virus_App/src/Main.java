@@ -14,18 +14,41 @@ public class Main {
         int tumorousCells = 0;
         createCells();
         createVirus();
-        tumorousCells = returnNumTumorousCells(cells);
 
        while(keepGoing){
-            virus.moveVirusToAnotherCell(cells);
-            System.out.println(cells.get(virus.getCurrentCellPosition()).getCellType());
-            virus.destroyIfTumorousCell(virus.getCurrentCellPosition(), cells);
-            cycle++;
+
+           System.out.println("CYCLE: " + cycle);
+            if(cycle%5 == 0){
+                for(int i = 0; i < cells.size(); i++){
+                    if(cells.get(i).getCellType() == CellType.TUMOROUS){
+                        cells.get(i).infectNearestCell(cells);
+                    }
+                }
+            }
+           tumorousCells = returnNumTumorousCells(cells);
+
+           if(tumorousCells == 0 || tumorousCells == cells.size()){
+               keepGoing = false;
+               if(tumorousCells == 0){
+                   System.out.println("THE VIRUS HAS WON!!!");
+               }
+               else if(tumorousCells == cells.size()) {
+                   System.out.println("THE TUMOR HAS WON!!!");
+               }
+           }
+           virus.moveVirusToAnotherCell(cells);
+           System.out.println(cells.get(virus.getCurrentCellPosition()).getCellType());
+           virus.destroyIfTumorousCell(virus.getCurrentCellPosition(), cells);
+           System.out.println("Size of cell array is: " + cells.size());
+           System.out.println("Number of tumorous cells: " + returnNumTumorousCells(cells));
+
+
+           System.out.println('\n');
+
+           cycle++;
 
             //End simulation condition: All cells are tumorous or all tumorous cells have been destroyed
-            if( tumorousCells == 0 || tumorousCells == 100){
-                keepGoing = false;
-            }
+
         }
     }
 
@@ -54,12 +77,12 @@ public class Main {
     }
 
     public static int returnNumTumorousCells(ArrayList<Cell> cells){
-        int numTumorous = 0;
+        int count = 0;
         for(int i = 0; i < cells.size(); i++){
             if(cells.get(i).getCellType() == CellType.TUMOROUS){
-                numTumorous++;
+                count++;
             }
         }
-        return numTumorous;
+        return count;
     }
 }
