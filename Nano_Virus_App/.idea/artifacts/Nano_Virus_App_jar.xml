@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Nano_Virus_App:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Nano_Virus_App_jar</output-path>
+    <root id="archive" name="Nano_Virus_App.jar">
+      <element id="module-output" name="Nano_Virus_App" />
+    </root>
+  </artifact>
+</component>

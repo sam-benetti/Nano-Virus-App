@@ -30,30 +30,29 @@ public class Virus {
         this.currentCellPosition = currentCellPosition;
     }
 
-    public void moveVirusToAnotherCell(ArrayList<Cell> cells) {
+    public boolean moveVirusToAnotherCell(int index, ArrayList<Cell> cells) {
         double distance = 0;
-        int x = 0;
-        int y = 0;
-        int z = 0;
-        int randomIndex = 0;
+        int x = cells.get(index).getCoordinates(0);
+        int y = cells.get(index).getCoordinates(1);;
+        int z = cells.get(index).getCoordinates(2);;
+        boolean success = true;
 
-        while (distance == 0 || distance >= 5000) {
+        distance = Math.sqrt((Math.pow(x - currentCoordinates[0], 2)) +
+                (Math.pow(y - currentCoordinates[1], 2)) +
+                (Math.pow(z - currentCoordinates[2], 2)));
 
-            randomIndex = ThreadLocalRandom.current().nextInt(0, cells.size());
-            x = cells.get(randomIndex).getCoordinates(0);
-            y = cells.get(randomIndex).getCoordinates(1);
-            z = cells.get(randomIndex).getCoordinates(2);
-            distance = Math.sqrt((Math.pow(x - currentCoordinates[0], 2)) +
-                    (Math.pow(y - currentCoordinates[1], 2)) +
-                    (Math.pow(z - currentCoordinates[2], 2)));
+        if(distance < 5000){
+            setCurrentCellPosition(index);
+            setCurrentCoordinates(x, 0);
+            setCurrentCoordinates(y, 1);
+            setCurrentCoordinates(z, 2);
+            System.out.println("Virus has moved to Cell: " + getCurrentCellPosition());
+
+        } else if(distance > 5000) {
+            System.out.println("Cell not in range, try another cell");
+            success = false;
         }
-
-        setCurrentCellPosition(randomIndex);
-        setCurrentCoordinates(x, 0);
-        setCurrentCoordinates(y, 1);
-        setCurrentCoordinates(z, 2);
-        System.out.println("Virus has moved to Cell: " + getCurrentCellPosition());
-
+    return success;
     }
 
     public ArrayList<Cell> destroyIfTumorousCell(int index, ArrayList<Cell> cells){
