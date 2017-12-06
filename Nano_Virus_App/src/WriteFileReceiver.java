@@ -7,7 +7,7 @@ import java.nio.Buffer;
 public class WriteFileReceiver implements IWriteFileReceiver {
 
    private BufferedWriter openFile() {
-        File appDataFile = new File("./data/Nano-Virus-Data.txt");
+        File appDataFile = new File("Nano-Virus-Data.txt");
         BufferedWriter writer = null;
         try{
             writer = new BufferedWriter(new FileWriter(appDataFile, true));
