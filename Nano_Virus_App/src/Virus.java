@@ -30,6 +30,8 @@ public class Virus {
         this.currentCellPosition = currentCellPosition;
     }
 
+    /* Before virus is moved to the cell, a check is done to ensure the cell is within the range of 5000.
+        Function returns false if the check fails, so that the app can prompt the user for input again */
     public boolean moveVirusToAnotherCell(int index, ArrayList<Cell> cells) {
         double distance = 0;
         int x = cells.get(index).getCoordinates(0);
@@ -46,10 +48,8 @@ public class Virus {
             setCurrentCoordinates(x, 0);
             setCurrentCoordinates(y, 1);
             setCurrentCoordinates(z, 2);
-            System.out.println("Virus has moved to Cell: " + getCurrentCellPosition());
 
         } else if(distance > 5000) {
-            System.out.println("Cell not in range, try another cell");
             success = false;
         }
     return success;
@@ -58,7 +58,6 @@ public class Virus {
     public ArrayList<Cell> destroyIfTumorousCell(int index, ArrayList<Cell> cells){
         if(cells.get(index).getCellType() == CellType.TUMOROUS){
             cells.remove(index);
-            System.out.println("...................Tumor DESTROYED");
         }
         return cells;
     }
